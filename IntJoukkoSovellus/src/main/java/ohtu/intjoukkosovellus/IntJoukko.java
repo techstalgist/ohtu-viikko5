@@ -36,13 +36,17 @@ public class IntJoukko {
             return true;
         }
         if (!kuuluu(luku)) {
-            lisaaLukuKohtaan(luku, alkioidenLkm);
-            if (alkioidenLkm == ljono.length) {
-                kasvataTaulukkoa();
-            }
+            lisaaLuku(luku);
             return true;
         }
         return false;
+    }
+
+    private void lisaaLuku(int luku) {
+        lisaaLukuKohtaan(luku, alkioidenLkm);
+        if (alkioidenLkm == ljono.length) {
+            kasvataTaulukkoa();
+        }
     }
     
     private void kasvataTaulukkoa() {
@@ -71,19 +75,23 @@ public class IntJoukko {
     }
 
     public boolean poista(int luku) {
-        int apu;
         int kohta = lukuIndeksissa(luku);
         if (kohta != -1) {
             ljono[kohta] = 0;
-            for (int j = kohta; j < alkioidenLkm - 1; j++) {
-                apu = ljono[j];
-                ljono[j] = ljono[j + 1];
-                ljono[j + 1] = apu;
-            }
+            siirraLukujaKohtiTaulukonAlkua(kohta);
             alkioidenLkm--;
             return true;
         }
         return false;
+    }
+
+    private void siirraLukujaKohtiTaulukonAlkua(int kohta) {
+        int apu;
+        for (int j = kohta; j < alkioidenLkm - 1; j++) {
+            apu = ljono[j];
+            ljono[j] = ljono[j + 1];
+            ljono[j + 1] = apu;
+        }
     }
 
     private void kopioiTaulukko(int[] vanha, int[] uusi, int pituus) {
@@ -102,15 +110,19 @@ public class IntJoukko {
             case 1:
                 return "{" + ljono[0] + "}";
             default:
-                String tuotos = "{";
-                for (int i = 0; i < alkioidenLkm - 1; i++) {
-                    tuotos += ljono[i];
-                    tuotos += ", ";
-                }
-                tuotos += ljono[alkioidenLkm - 1];
-                tuotos += "}";
-                return tuotos;
+                return taulukkoMerkkijonoksi();
         }
+    }
+
+    private String taulukkoMerkkijonoksi() {
+        String tuotos = "{";
+        for (int i = 0; i < alkioidenLkm - 1; i++) {
+            tuotos += ljono[i];
+            tuotos += ", ";
+        }
+        tuotos += ljono[alkioidenLkm - 1];
+        tuotos += "}";
+        return tuotos;
     }
 
     public int[] toIntArray() {
