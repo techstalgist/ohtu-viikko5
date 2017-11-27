@@ -8,9 +8,8 @@ import static org.junit.Assert.*;
 
 public class JoukkoOperaatiotTest {
     
-    
     @Test
-    public void testSomething() {
+    public void yhdiste() {
         IntJoukko eka = teeJoukko(1,2);
         IntJoukko toka = teeJoukko(3,4);
         
@@ -19,6 +18,34 @@ public class JoukkoOperaatiotTest {
         Arrays.sort(vastauksenLuvut);
         
         int[] odotettu = {1,2,3,4};
+        
+        assertArrayEquals(odotettu, vastauksenLuvut);        
+    }
+    
+    @Test
+    public void leikkaus() {
+        IntJoukko eka = teeJoukko(1,2,3);
+        IntJoukko toka = teeJoukko(2,3,4);
+        
+        IntJoukko tulos = IntJoukko.leikkaus(eka, toka);
+        int[] vastauksenLuvut = tulos.toIntArray();
+        Arrays.sort(vastauksenLuvut);
+        
+        int[] odotettu = {2,3};
+        
+        assertArrayEquals(odotettu, vastauksenLuvut);        
+    }
+    
+    @Test
+    public void erotus() {
+        IntJoukko eka = teeJoukko(1,2,3);
+        IntJoukko toka = teeJoukko(2,3,4);
+        
+        IntJoukko tulos = IntJoukko.erotus(eka, toka);
+        int[] vastauksenLuvut = tulos.toIntArray();
+        Arrays.sort(vastauksenLuvut);
+        
+        int[] odotettu = {1};
         
         assertArrayEquals(odotettu, vastauksenLuvut);        
     } 
